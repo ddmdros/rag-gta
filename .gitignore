@@ -1,0 +1,13 @@
+# Ambientes e Módulos
+.venv/
+venv/
+node_modules/
+src/node_modules/
+
+# Banco de dados e arquivos pesados
+src/data/chroma_gta_db/
+src/data/gta_bible.txt
+
+# Python cache
+__pycache__/
+*.pyc
