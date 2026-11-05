@@ -75,6 +75,22 @@ Modelos diferentes: variáveis `RAG_LLM` e `RAG_EMBED`.
 | `false_refusal` | o modelo recusou uma pergunta que tinha resposta | prompt (regra de recusa muito forte) |
 | `refusal_ok` | o modelo recusou a pergunta fora do corpus | prompt (alucinação) |
 
+### Resultados
+
+Glossário, `llama3.1:8b` + `nomic-embed-text`, runner do GitHub Actions só com CPU, 05/11/2026
+([rodada](https://github.com/ddmdros/rag-gta/actions/runs/42052451659)):
+
+| Modo | `retrieval_hit` | `answer_hit` | `false_refusal` | `refusal_ok` | s/pergunta |
+|---|---|---|---|---|---|
+| similarity | 15/15 | 15/15 | 0 | 3/4 | 16 |
+| mmr | 14/15 | 14/15 | 0 | 3/4 | 16 |
+| multiquery | 15/15 | 15/15 | 0 | 4/4 | 66 |
+
+- Com `similarity` e `mmr`, o modelo responde sobre *perk*, que não está no glossário, em vez de recusar.
+  O `multiquery` acerta a recusa, mas custa cerca de 4 vezes mais tempo por pergunta.
+- O `mmr` perde *damage per second*: ao buscar trechos diferentes entre si, deixa de fora o termo mais próximo.
+  Num glossário, em que cada documento é um termo, diversidade atrapalha; por isso o padrão do glossário é `similarity`.
+
 Cada rodada grava as respostas, as fontes e o resumo em `eval/results/`, para comparar configurações. Os
 termos esperados do glossário são conferidos contra o CSV num teste (`tests/test_evaluate.py`): a avaliação
 testa o sistema, não a memória de quem escreveu as perguntas.
