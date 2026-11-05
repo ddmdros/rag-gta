@@ -94,6 +94,27 @@ Glossary, `llama3.1:8b` + `nomic-embed-text`, CPU-only GitHub Actions runner, 20
   term. In a glossary, where each document is one term, diversity hurts; that is why the glossary default is
   `similarity`.
 
+Lore, same models and runner, 2026-11-05 ([run](https://github.com/ddmdros/rag-gta/actions/runs/42053328578)),
+corpus of 17 articles (391,545 characters, 364 chunks):
+
+| Mode | `retrieval_hit` | `answer_hit` | `false_refusal` | `refusal_ok` | s/question |
+|---|---|---|---|---|---|
+| similarity | 10/10 | 9/10 | 0 | 3/3 | 149 |
+| mmr | 10/10 | 9/10 | 0 | 3/3 | 124 |
+| multiquery | 10/10 | 10/10 | 0 | 0/3 | 203 |
+
+- Retrieval found the expected passage for every question in all three modes, with English articles and
+  Portuguese questions. Every miss is in generation, not in search.
+- `similarity` misses CJ's brother (l05) and `mmr` misses Vice City's protagonist (l04): the passage was in the
+  context, but the answer did not contain the expected name, and it was not a refusal either.
+- `multiquery` answers all ten but refuses none of the three questions outside the corpus (the capital of
+  Australia, Tommy Vercetti's carrot cake recipe, the 2002 World Cup): the opposite of the glossary, where it was the
+  only mode that refused everything. The answers are in the run's `eval-results` artifact. Because a wrong answer to
+  an out-of-scope question is worse than a slow one, the lore default stays `mmr`.
+- The three city articles (Los Santos, Liberty City, Vice City) come out with only 90 to 157 characters of prose.
+  The city questions (l06 to l08) still pass because the game articles name the real cities, but the article list
+  should point to fuller pages.
+
 Each run writes the answers, the sources and the summary to `eval/results/`, to compare configurations. The
 glossary's expected terms are checked against the CSV in a test (`tests/test_evaluate.py`): the evaluation tests
 the system, not the memory of whoever wrote the questions.
