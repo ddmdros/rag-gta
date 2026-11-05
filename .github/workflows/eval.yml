@@ -1,0 +1,74 @@
+name: Eval
+
+# Runs the real evaluation (Ollama on the runner's CPU) on demand. Slow but needs no local machine.
+# Results: the job summary and the "eval-results" artifact (eval/results/*.json).
+on:
+  workflow_dispatch:
+    inputs:
+      corpus:
+        description: Corpus to evaluate (lore needs data/gta_bible.txt, which is not in git)
+        type: choice
+        options: [glossary]
+        default: glossary
+      modes:
+        description: Space-separated retrieval modes
+        default: similarity mmr multiquery
+      llm:
+        description: Ollama chat model
+        default: llama3.1:8b
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      RAG_LLM: ${{ inputs.llm }}
+      RAG_EMBED: nomic-embed-text
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Cache Ollama models
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: ollama-${{ inputs.llm }}-nomic-embed-text
+
+      - name: Install and start Ollama
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          sudo systemctl stop ollama 2>/dev/null || true
+          nohup ollama serve > ollama.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:11434/api/version && break; sleep 1; done
+          ollama pull "$RAG_LLM"
+          ollama pull "$RAG_EMBED"
+
+      - name: Evaluate
+        run: |
+          for mode in ${{ inputs.modes }}; do
+            python -m rag_gta eval ${{ inputs.corpus }} --mode "$mode" | tee -a eval.log
+          done
+
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo "## ${{ inputs.corpus }} · $RAG_LLM · CPU runner"
+            echo '```'
+            grep -E '^Resumo:' eval.log || echo "no summary"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-results
+          path: |
+            eval/results/
+            eval.log
+            ollama.log
+          if-no-files-found: warn
