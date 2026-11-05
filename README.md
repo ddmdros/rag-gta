@@ -4,8 +4,8 @@ A local RAG, with no paid API and no data leaving the machine: **Ollama** (`llam
 `nomic-embed-text`) + **Chroma** + **LangChain**. It answers in Portuguese over two corpora:
 
 - **lore:** the Grand Theft Auto universe, from GTA Wiki articles, with the source of each answer;
-- **glossary:** an EN → PT-BR video game localization glossary, which shows the same pipeline in a terminology
-  domain, where the answer has to come out *exactly* as it is in the source.
+- **glossary:** an EN → PT-BR video game localization glossary that I co-authored, which shows the same pipeline in
+  a terminology domain, where the answer has to come out *exactly* as it is in the source.
 
 It also has an **evaluation set** that measures separately whether the system found the right passage, whether
 it answered correctly and whether it admitted when it did not know.
@@ -104,9 +104,12 @@ workflow) installs Ollama on the runner, runs the requested modes and publishes 
 
 ## The data
 
-- **Glossary** (`data/glossario_gamer_ptbr.csv`): *Video Games Localization Glossary – Portuguese (Brazil)*, a
-  collective effort by translators, distributed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
-  Used here non-commercially and with this attribution.
+- **Glossary** (`data/glossario_gamer_ptbr.csv`): *Video Games Localization Glossary – Portuguese (Brazil)*, by
+  Diogo Medeiros and Bruna Beatriz Gabriel, published in Lucile Danilov's
+  [Multilingual Gameloc Glossaries](https://locdandloaded.net/2022/06/14/multilingual-gameloc-glossaries/), a collaborative project with one glossary per language written by
+  translators from the localization community. Distributed under
+  [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). Since I know which term each entry should give,
+  the glossary evaluation checks answers against terms I can vouch for.
 - **Lore** (`data/gta_bible.txt`, not in git): text from [GTA Wiki](https://gta.fandom.com) articles, whose
   content is under [CC BY-SA](https://www.fandom.com/licensing). The text is not versioned:
   `python -m rag_gta.lore_corpus` downloads a fixed list of articles through the wiki's API (the protagonists,
