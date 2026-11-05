@@ -1,0 +1,19 @@
+{"id": "g01", "type": "answer", "question": "Como traduzo 'damage per second' para o português do Brasil?", "expect": ["dano por segundo"]}
+{"id": "g02", "type": "answer", "question": "Qual a tradução de 'cooldown' no glossário?", "expect": ["tempo de espera", "reativação"]}
+{"id": "g03", "type": "answer", "question": "Como fica 'crowd control' em português?", "expect": ["controle dispersivo", "controle de multidão"]}
+{"id": "g04", "type": "answer", "question": "O que uso para 'debuff'?", "expect": ["efeito negativo"]}
+{"id": "g05", "type": "answer", "question": "Como traduzir 'cutscene'?", "expect": ["sequência narrativa", "sequência cinematográfica", "animação"]}
+{"id": "g06", "type": "answer", "question": "Qual o termo em português para o modo 'deathmatch'?", "expect": ["mata-mata", "todos contra todos"]}
+{"id": "g07", "type": "answer", "question": "Tradução de 'achievement'?", "expect": ["conquista"]}
+{"id": "g08", "type": "answer", "question": "Como o glossário traduz 'respawn'?", "expect": ["ressurgir", "ressurgimento"]}
+{"id": "g09", "type": "answer", "question": "E 'nerf', como traduzo?", "expect": ["enfraquecimento"]}
+{"id": "g10", "type": "answer", "question": "Qual a tradução de 'matchmaking'?", "expect": ["pareamento", "organização de partidas", "criação de partidas"]}
+{"id": "g11", "type": "answer", "question": "Como traduzo 'leaderboard'?", "expect": ["placar", "classificação"]}
+{"id": "g12", "type": "answer", "question": "O que o glossário sugere para 'vault'?", "expect": ["caixa-forte", "cofre", "baú"]}
+{"id": "g13", "type": "answer", "question": "Como traduzir 'skin' de personagem?", "expect": ["visual"]}
+{"id": "g14", "type": "answer", "question": "Qual a tradução de DoT?", "expect": ["dano contínuo"]}
+{"id": "g15", "type": "answer", "question": "Como traduzo 'buff'?", "expect": ["bônus", "melhoria"]}
+{"id": "g90", "type": "refusal", "question": "Como o glossário traduz 'hitbox'?"}
+{"id": "g91", "type": "refusal", "question": "Qual a tradução de 'parry' no glossário?"}
+{"id": "g92", "type": "refusal", "question": "Como traduzir 'stealth' segundo o glossário?"}
+{"id": "g93", "type": "refusal", "question": "O glossário tem tradução para 'perk'?"}

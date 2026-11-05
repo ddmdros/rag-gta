@@ -1,0 +1,13 @@
+{"id": "l01", "type": "answer", "question": "Quem é o protagonista de GTA San Andreas?", "expect": ["Carl Johnson", "CJ"]}
+{"id": "l02", "type": "answer", "question": "Quais são os três protagonistas de GTA V?", "expect": ["Trevor"]}
+{"id": "l03", "type": "answer", "question": "Quem é o protagonista de GTA IV?", "expect": ["Niko Bellic"]}
+{"id": "l04", "type": "answer", "question": "Quem é o protagonista de GTA Vice City?", "expect": ["Tommy Vercetti"]}
+{"id": "l05", "type": "answer", "question": "Qual o nome do irmão de Carl Johnson?", "expect": ["Sweet", "Sean Johnson"]}
+{"id": "l06", "type": "answer", "question": "Em que cidade real Los Santos é inspirada?", "expect": ["Los Angeles"]}
+{"id": "l07", "type": "answer", "question": "Em que cidade real Liberty City é inspirada?", "expect": ["Nova York", "New York"]}
+{"id": "l08", "type": "answer", "question": "Em que cidade real Vice City é inspirada?", "expect": ["Miami"]}
+{"id": "l09", "type": "answer", "question": "Quem é o primo de Niko Bellic que o recebe em Liberty City?", "expect": ["Roman"]}
+{"id": "l10", "type": "answer", "question": "Qual membro da Grove Street trai CJ em San Andreas?", "expect": ["Big Smoke", "Ryder"]}
+{"id": "l90", "type": "refusal", "question": "Qual é a capital da Austrália?"}
+{"id": "l91", "type": "refusal", "question": "Qual a receita de bolo de cenoura favorita de Tommy Vercetti?"}
+{"id": "l92", "type": "refusal", "question": "Quem ganhou a Copa do Mundo de 2002?"}
