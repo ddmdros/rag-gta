@@ -51,7 +51,8 @@ pip install -r requirements.txt
 python -m rag_gta ask glossary "Como traduzo cooldown?"
 python -m rag_gta eval glossary
 
-# Lore: monte o corpus antes (seção abaixo)
+# Lore: o corpus é montado do GTA Wiki (seção «Os dados»)
+python -m rag_gta.lore_corpus
 python -m rag_gta index lore
 python -m rag_gta ask lore "Quem é o irmão de Carl Johnson?" --show-chunks
 python -m rag_gta chat lore
@@ -78,15 +79,24 @@ Cada rodada grava as respostas, as fontes e o resumo em `eval/results/`, para co
 termos esperados do glossário são conferidos contra o CSV num teste (`tests/test_evaluate.py`): a avaliação
 testa o sistema, não a memória de quem escreveu as perguntas.
 
+Sem máquina local, a avaliação roda no GitHub Actions: workflow **Eval** (Actions → Eval → Run workflow), que
+instala o Ollama no runner, roda os modos pedidos e publica o resumo da rodada e os arquivos de `eval/results/`.
+O runner só tem CPU, então uma rodada leva dezenas de minutos, mas o placar é o mesmo.
+
 ## Os dados
 
 - **Glossário** (`data/glossario_gamer_ptbr.csv`): *Video Games Localization Glossary – Portuguese (Brazil)*,
   esforço coletivo de tradutores, distribuído sob [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
   Usado aqui sem fins comerciais e com esta atribuição.
 - **Lore** (`data/gta_bible.txt`, fora do git): texto de artigos do [GTA Wiki](https://gta.fandom.com),
-  cujo conteúdo está sob [CC BY-SA](https://www.fandom.com/licensing). O arquivo original foi montado por um
-  script de raspagem que não está neste repositório, e o texto não é versionado. Para montar o seu, junte num
-  `.txt` os artigos que quiser consultar, com a URL de cada artigo numa linha antes do texto:
+  cujo conteúdo está sob [CC BY-SA](https://www.fandom.com/licensing). O texto não é versionado: `python -m rag_gta.lore_corpus`
+  baixa pela API do wiki uma lista fixa de artigos (os protagonistas, as pessoas em volta deles, as cidades e os
+  jogos que a avaliação pergunta) e guarda só a prosa, sem infobox, tabela nem referências. A lista é fixa para
+  que qualquer pessoa remonte o mesmo corpus e compare rodadas. Os artigos estão em inglês e as perguntas, em
+  português, então a avaliação da lore também testa a busca entre idiomas. A primeira versão do projeto usava
+  um corpus montado por outro script de raspagem, que não está no repositório.
+
+  Para usar outros artigos, monte o seu `.txt` no mesmo formato, com a URL de cada artigo numa linha antes do texto:
 
   ```text
   https://gta.fandom.com/wiki/Carl_Johnson

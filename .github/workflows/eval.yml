@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       corpus:
-        description: Corpus to evaluate (lore needs data/gta_bible.txt, which is not in git)
+        description: Corpus to evaluate (lore is rebuilt from the GTA Wiki first)
         type: choice
-        options: [glossary]
+        options: [glossary, lore]
         default: glossary
       modes:
         description: Space-separated retrieval modes
@@ -21,6 +21,9 @@ jobs:
   eval:
     runs-on: ubuntu-latest
     timeout-minutes: 300
+    defaults:
+      run:
+        shell: bash  # -o pipefail: a failing command is not hidden by tee
     env:
       RAG_LLM: ${{ inputs.llm }}
       RAG_EMBED: nomic-embed-text
@@ -47,6 +50,10 @@ jobs:
           ollama pull "$RAG_LLM"
           ollama pull "$RAG_EMBED"
 
+      - name: Build the lore corpus
+        if: inputs.corpus == 'lore'
+        run: python -m rag_gta.lore_corpus | tee corpus.log
+
       - name: Evaluate
         run: |
           for mode in ${{ inputs.modes }}; do
@@ -61,6 +68,7 @@ jobs:
             echo '```'
             grep -E '^Resumo:' eval.log || echo "no summary"
             echo '```'
+            if [ -f corpus.log ]; then echo '### Lore corpus'; echo '```'; cat corpus.log; echo '```'; fi
           } >> "$GITHUB_STEP_SUMMARY"
 
       - uses: actions/upload-artifact@v4
@@ -70,5 +78,7 @@ jobs:
           path: |
             eval/results/
             eval.log
+            corpus.log
             ollama.log
+            data/gta_bible.txt
           if-no-files-found: warn
