@@ -84,8 +84,9 @@ testa o sistema, não a memória de quem escreveu as perguntas.
   esforço coletivo de tradutores, distribuído sob [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
   Usado aqui sem fins comerciais e com esta atribuição.
 - **Lore** (`data/gta_bible.txt`, fora do git): texto de artigos do [GTA Wiki](https://gta.fandom.com),
-  cujo conteúdo está sob [CC BY-SA](https://www.fandom.com/licensing). O arquivo não é versionado. Para montar o
-  seu, junte num `.txt` os artigos que quiser consultar, com a URL de cada artigo numa linha antes do texto:
+  cujo conteúdo está sob [CC BY-SA](https://www.fandom.com/licensing). O arquivo original foi montado por um
+  script de raspagem que não está neste repositório, e o texto não é versionado. Para montar o seu, junte num
+  `.txt` os artigos que quiser consultar, com a URL de cada artigo numa linha antes do texto:
 
   ```text
   https://gta.fandom.com/wiki/Carl_Johnson
@@ -131,5 +132,6 @@ anteriores deixavam escapar:
 
 ## Créditos
 
-Feito em dupla por Diogo Medeiros e Stephanie. A reorganização em pacote, a avaliação e os testes vieram
-depois, em novembro de 2026.
+Feito em dupla por Diogo Medeiros ([GitHub](https://github.com/ddmdros)) e Stephanie Pinho
+([GitHub](https://github.com/stephanielumertz), [LinkedIn](https://www.linkedin.com/in/stephanielumertz/)).
+A reorganização em pacote, a avaliação e os testes vieram depois, em novembro de 2026.
